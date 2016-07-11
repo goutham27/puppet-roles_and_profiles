@@ -1,3 +1,4 @@
+# Requires puppetlabs/lvm
 define profile::app_storage(
   $physical_volumes,
   $volume_group,
