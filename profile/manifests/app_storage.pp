@@ -3,10 +3,7 @@ define profile::app_storage(
   $physical_volumes,
   $volume_group,
   $filesystem_type,
-  # $size,
   $mount_point,
-  $owner,
-  $group,
 ){
 
   lvm::volume { $title:
@@ -19,8 +16,6 @@ define profile::app_storage(
 
   file { $mount_point:
     ensure => directory,
-    owner  => $owner,
-    group  => $group,
   }
 
   mount { $mount_point:
