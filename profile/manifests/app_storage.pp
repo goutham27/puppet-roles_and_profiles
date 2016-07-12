@@ -14,7 +14,6 @@ define profile::app_storage(
     vg     => $volume_group,
     pv     => $physical_volume,
     fstype => $filesystem_type,
-    # size => $size,
     before => Mount[$mount_point],
   }
 
