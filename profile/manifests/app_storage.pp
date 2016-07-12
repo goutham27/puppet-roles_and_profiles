@@ -1,27 +1,33 @@
-# Requires puppetlabs/lvm
 define profile::app_storage(
-  $physical_volumes,
+  $ensure,
+  $physical_volume,
   $volume_group,
   $filesystem_type,
+  # $size,
   $mount_point,
+  $owner,
+  $group,
 ){
 
   lvm::volume { $title:
-    ensure => present,
+    ensure => $ensure,
     vg     => $volume_group,
-    pv     => $physical_volumes,
+    pv     => $physical_volume,
     fstype => $filesystem_type,
-    # size   => $size,
+    # size => $size,
+    before => Mount[$mount_point],
   }
 
   file { $mount_point:
     ensure => directory,
+    owner  => $owner,
+    group  => $group,
   }
 
   mount { $mount_point:
-    ensure => mounted,
-    device => "/dev/${volume_group}/${title}",
-    fstype => $filesystem_type,
+    ensure  => mounted,
+    device  => "/dev/${volume_group}/${title}",
+    fstype  => $filesystem_type,
   }
 
 }
